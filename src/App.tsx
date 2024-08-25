@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Typography } from "@mui/material";
+import BasicTable from "./components/Table";
+import useWorker from "./hooks/useWorker";
+import { useEffect } from "react";
 
 function App() {
+  const { workerResult, postMessage } = useWorker<String, any[]>(
+    new URL("http://localhost:3000/worker.js", import.meta.url).toString()
+  );
+  const data = workerResult;
+
+  useEffect(() => {
+    // Start fetching data
+    postMessage("Start Fetching!!");
+  }, [postMessage]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Typography variant="h3" sx={{ margin: "10px" }}>
+        Basic Table
+      </Typography>
+      <BasicTable data={data} />
     </div>
   );
 }
