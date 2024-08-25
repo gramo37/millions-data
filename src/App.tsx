@@ -5,13 +5,13 @@ import { useEffect } from "react";
 
 function App() {
   const { workerResult, postMessage } = useWorker<String, any[]>(
-    new URL("http://localhost:3000/worker.js", import.meta.url).toString()
+    new URL("http://localhost:3000/worker2.js", import.meta.url).toString()
   );
   const data = workerResult;
 
   useEffect(() => {
     // Start fetching data
-    postMessage("Start Fetching!!");
+    postMessage("start");
   }, [postMessage]);
 
   return (
